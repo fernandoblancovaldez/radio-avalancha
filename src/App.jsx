@@ -1,8 +1,7 @@
 import "./App.css";
-import Footer from "./Footer/Footer";
-import Main from "./main/Main";
-
 import RadioPlayerNav from "./radio-player-nav/RadioPlayerNav";
+import Main from "./main/Main";
+import Footer from "./footer/Footer";
 
 function App() {
   return (
