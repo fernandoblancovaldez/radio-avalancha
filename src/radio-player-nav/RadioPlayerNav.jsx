@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 function RadioPlayerNav() {
-  const api = "https://giss.tv:8000/amparo.mp3";
   return (
     <header className="fixed-top bg-blur">
       <Navbar
@@ -36,7 +35,10 @@ function RadioPlayerNav() {
               </Col>
               <Col className="p-0 col-lg-4 d-flex align-items-center justify-content-center">
                 <audio controls>
-                  <source src={api} type="audio/mpeg" />
+                  <source
+                    src="http://giss.tv:8000/acbradio.mp3"
+                    type="audio/mpeg"
+                  />
                 </audio>
               </Col>
             </Row>
