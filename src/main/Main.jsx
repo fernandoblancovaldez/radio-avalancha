@@ -5,15 +5,15 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 
 import Slide1 from "../assets/slide1.jpeg";
-/* import Slide2 from "../assets/slide2.jpeg";
-import Slide3 from "../assets/slide3.jpeg"; */
+import Slide2 from "../assets/slide2.jpeg";
+import Slide3 from "../assets/slide3.jpeg";
 
 const Main = () => {
   return (
     <main className="w-100">
       <Container>
         <Row className="mx-0">
-          <Col className="col-12 col-lg-4">
+          <Col className="col-12">
             <Carousel>
               <Carousel.Item>
                 <Image
@@ -29,7 +29,7 @@ const Main = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <Image
-                  src={Slide1}
+                  src={Slide2}
                   text="Segundo Slide"
                   className="d-block w-100"
                   rounded
@@ -41,7 +41,7 @@ const Main = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <Image
-                  src={Slide1}
+                  src={Slide3}
                   text="Tercer Slide"
                   className="d-block w-100"
                   rounded

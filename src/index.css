@@ -20,10 +20,30 @@ body {
   backdrop-filter: blur(0.5rem);
 }
 
+nav > div > span {
+  height: 15vh;
+}
+
+.navbar-nav {
+  gap: 2rem;
+}
+
 main {
-  place-self: center;
+  margin-top: 20vh;
+}
+
+footer {
+  height: 5vh;
+  place-items: center;
 }
 
 .carousel-item {
+  height: 40vh;
   overflow: hidden;
+}
+
+.carousel-item img {
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0.6);
 }

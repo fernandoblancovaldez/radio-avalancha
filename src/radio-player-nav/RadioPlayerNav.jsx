@@ -15,22 +15,26 @@ function RadioPlayerNav() {
         bg="transparent"
         expand="lg"
       >
-        <Container className="">
-          <Navbar.Brand className="my-1 mx-auto fs-4 fw-light d-flex align-items-center justify-content-center">
+        <Container className="px-0">
+          <Navbar.Brand className="my-auto mx-auto p-0 fs-4 fw-light d-flex align-items-center justify-content-center">
             <Image src={AvalanchaLogo} height="50" alt="Avalancha Logo" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Row className="navbar-nav ms-lg-auto">
-              <Col className="ms-lg-auto py-3 col-lg-2 d-flex align-items-center justify-content-center">
+            <Row className="navbar-nav mx-0 w-100">
+              <Col className="ms-lg-auto p-0 col-lg-2 d-flex align-items-center justify-content-center">
                 <Image
                   src={EscuchameEntreElRuidoLogo}
-                  thumbnail
-                  rounded
+                  fluid
                   alt="Escuchame Ente El Ruido"
+                  className="w-50 h-75"
+                  rounded
+                  style={{
+                    objectFit: "contain",
+                  }}
                 />
               </Col>
-              <Col className="py-3 col-lg-4 d-flex align-items-center justify-content-center">
+              <Col className="p-0 col-lg-4 d-flex align-items-center justify-content-center">
                 <audio controls>
                   <source src={api} type="audio/mpeg" />
                 </audio>
