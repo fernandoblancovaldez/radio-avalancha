@@ -21,7 +21,7 @@ body {
 }
 
 nav > div > span {
-  height: 15vh;
+  height: 10vh;
 }
 
 .navbar-nav {
@@ -29,25 +29,26 @@ nav > div > span {
 }
 
 main {
-  margin-top: 20vh;
+  margin-top: 10vh;
 }
 
 footer {
-  height: 5vh;
   place-items: center;
 }
 
 .carousel-item {
-  height: 40vh;
+  height: 50vh;
   overflow: hidden;
 }
 
 .carousel-item img {
   height: 100%;
-  object-fit: contain;
-  filter: brightness(0.6);
+  object-fit: cover;
+  filter: brightness(0.3);
 }
 
 .show {
   height: 80vh;
+  display: grid;
+  place-items: center;
 }

@@ -11,9 +11,9 @@ import Slide3 from "../assets/slide3.jpeg";
 const Main = () => {
   return (
     <main className="w-100">
-      <Container>
+      <Container className="px-0">
         <Row className="mx-0">
-          <Col className="col-12">
+          <Col className="col-12 px-0">
             <Carousel>
               <Carousel.Item>
                 <Image

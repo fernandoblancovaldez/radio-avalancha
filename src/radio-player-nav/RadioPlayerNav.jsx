@@ -14,8 +14,8 @@ function RadioPlayerNav() {
         bg="transparent"
         expand="lg"
       >
-        <Container className="px-0">
-          <Navbar.Brand className="my-auto mx-auto p-0 fs-4 fw-light d-flex align-items-center justify-content-center">
+        <Container className="px-lg-0">
+          <Navbar.Brand className="my-auto me-auto p-0 fs-4 fw-light d-flex align-items-center justify-content-center">
             <Image src={AvalanchaLogo} height="50" alt="Avalancha Logo" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
