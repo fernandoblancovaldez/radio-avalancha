@@ -35,10 +35,7 @@ function RadioPlayerNav() {
               </Col>
               <Col className="p-0 col-lg-4 d-flex align-items-center justify-content-center">
                 <audio controls>
-                  <source
-                    src="http://giss.tv:8000/acbradio.mp3"
-                    type="audio/mpeg"
-                  />
+                  <source src="/api/acbradio.mp3" type="audio/mpeg" />
                 </audio>
               </Col>
             </Row>
