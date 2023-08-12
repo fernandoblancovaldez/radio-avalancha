@@ -24,7 +24,6 @@ main {
   place-self: center;
 }
 
-.carousel-item.active {
-  display: grid;
-  place-items: center;
+.carousel-item {
+  overflow: hidden;
 }
