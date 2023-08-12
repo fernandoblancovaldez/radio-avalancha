@@ -40,7 +40,7 @@ function RadioPlayerNav() {
               </Col>
               <Col className="p-0 col-lg-4 d-flex align-items-center justify-content-center">
                 <audio controls>
-                  <source src={() => api()} type="audio/mpeg" />
+                  <source src={api()} type="audio/mpeg" />
                 </audio>
               </Col>
             </Row>
