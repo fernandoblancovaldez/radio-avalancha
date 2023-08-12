@@ -5,13 +5,16 @@ import Navbar from "react-bootstrap/Navbar";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useState, useEffect } from "react";
 
 function RadioPlayerNav() {
-  const api = () => {
+  const [api, setApi] = useState("/api/");
+  useEffect(() => {
     setInterval(() => {
-      return "/api/";
+      setApi("/api/");
     }, 60000);
-  };
+  }, []);
+
   return (
     <header className="fixed-top bg-blur">
       <Navbar
@@ -40,7 +43,7 @@ function RadioPlayerNav() {
               </Col>
               <Col className="p-0 col-lg-4 d-flex align-items-center justify-content-center">
                 <audio controls>
-                  <source src={api()} type="audio/mpeg" />
+                  <source src={api} type="audio/mpeg" />
                 </audio>
               </Col>
             </Row>
