@@ -30,6 +30,8 @@ nav > div > span {
 
 main {
   margin-top: 10vh;
+
+  margin-bottom: 10vh;
 }
 
 footer {
@@ -37,7 +39,7 @@ footer {
 }
 
 .carousel-item {
-  height: 50vh;
+  height: 45vh;
   overflow: hidden;
 }
 
@@ -45,6 +47,15 @@ footer {
   height: 100%;
   object-fit: cover;
   filter: brightness(0.3);
+}
+
+.chat-rom {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  transition: all 0.3s ease 0s;
 }
 
 .show {

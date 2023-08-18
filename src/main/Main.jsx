@@ -7,12 +7,13 @@ import Image from "react-bootstrap/Image";
 import Slide1 from "../assets/slide1.jpeg";
 import Slide2 from "../assets/slide2.jpeg";
 import Slide3 from "../assets/slide3.jpeg";
+import Chat from "../chat/Chat";
 
 const Main = () => {
   return (
     <main className="w-100">
       <Container className="px-0">
-        <Row className="mx-0">
+        <Row className="mx-3 gap-3">
           <Col className="col-12 px-0">
             <Carousel>
               <Carousel.Item>
@@ -53,7 +54,9 @@ const Main = () => {
               </Carousel.Item>
             </Carousel>
           </Col>
-          <Col>chat</Col>
+          <Col className="px-lg-0">
+            <Chat />
+          </Col>
         </Row>
       </Container>
     </main>
