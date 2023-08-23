@@ -3,11 +3,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
-
 import Slide1 from "../assets/slide1.jpeg";
 import Slide2 from "../assets/slide2.jpeg";
 import Slide3 from "../assets/slide3.jpeg";
 import Chat from "../chat/Chat";
+import { AuthProvider } from "../chat/context/AuthContext";
 
 const Main = () => {
   return (
@@ -55,7 +55,9 @@ const Main = () => {
             </Carousel>
           </Col>
           <Col className="px-lg-0">
-            <Chat />
+            <AuthProvider>
+              <Chat />
+            </AuthProvider>
           </Col>
         </Row>
       </Container>

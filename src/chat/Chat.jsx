@@ -7,9 +7,12 @@ import Badge from "react-bootstrap/Badge";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import { UserAuth } from "./context/AuthContext";
 
 const Chat = () => {
   const [value, setValue] = useState("");
+  const { currentUser, signInWithGoogle } = UserAuth();
+  console.log(currentUser);
 
   const messages = [
     {
@@ -39,6 +42,14 @@ const Chat = () => {
     },
   ];
 
+  const handleLogin = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSendMessage = (e) => {
     e.preventDefault();
     console.log(value);
@@ -48,48 +59,49 @@ const Chat = () => {
 
   return (
     <Stack gap={2} className="chat ">
-      <FloatingLabel controlId="floatingNombre" label="Nombre">
-        <Form.Control type="nombre" placeholder="Nombre" />
-      </FloatingLabel>
-      <form className="input-group" onSubmit={handleSendMessage}>
-        <input
-          id="input-text"
-          className="form-control"
-          type="text"
-          placeholder="Mensaje"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <Button variant="dark" type="submit">
-          Enviar
+      {currentUser ? (
+        <form className="input-group" onSubmit={handleSendMessage}>
+          <input
+            id="input-text"
+            className="form-control"
+            type="text"
+            placeholder="Mensaje"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <Button variant="dark" type="submit">
+            Enviar
+          </Button>
+        </form>
+      ) : (
+        <Button variant="dark" onClick={handleLogin}>
+          Ingresar al chat
         </Button>
-      </form>
+      )}
       <Container className="chat-rom gap-1">
         {messages.map((message) => (
-          <>
-            <Row xs="auto" className="mx-0">
-              <Col className="my-auto">
-                <Badge pill bg="dark" text="white" key={message.id}>
-                  {message.id}
+          <Row xs="auto" className="mx-0" key={message.id}>
+            <Col className="my-auto">
+              <Badge pill bg="dark" text="white">
+                {message.id}
+              </Badge>
+            </Col>
+            <Col>
+              <Row className="small text-light text-start">
+                {message.nombre} dice:
+              </Row>
+              <Row>
+                <Badge
+                  className="text-start fs-6"
+                  bg="dark"
+                  text="white"
+                  key={message.id}
+                >
+                  {message.message}
                 </Badge>
-              </Col>
-              <Col>
-                <Row className="small text-light text-start">
-                  {message.nombre} dice:
-                </Row>
-                <Row>
-                  <Badge
-                    className="text-start fs-6"
-                    bg="dark"
-                    text="white"
-                    key={message.id}
-                  >
-                    {message.message}
-                  </Badge>
-                </Row>
-              </Col>
-            </Row>
-          </>
+              </Row>
+            </Col>
+          </Row>
         ))}
       </Container>
     </Stack>
