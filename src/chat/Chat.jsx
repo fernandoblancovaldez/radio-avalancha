@@ -1,46 +1,30 @@
-import { useState } from "react";
-import Stack from "react-bootstrap/Stack";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Badge from "react-bootstrap/Badge";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
+import { useEffect, useRef, useState } from "react";
 import { UserAuth } from "./context/AuthContext";
+import {
+  collection,
+  query,
+  onSnapshot,
+  addDoc,
+  serverTimestamp,
+  orderBy,
+  limit,
+} from "firebase/firestore";
+import { db } from "../firebase";
+
+import { Button, Row, Col, Container, Image } from "react-bootstrap";
+import { BoxArrowRight } from "react-bootstrap-icons";
 
 const Chat = () => {
+  const messagesEndRef = useRef();
   const [value, setValue] = useState("");
-  const { currentUser, signInWithGoogle } = UserAuth();
-  console.log(currentUser);
+  const [messages, setMessages] = useState([]);
+  const { currentUser, signInWithGoogle, logout } = UserAuth();
 
-  const messages = [
-    {
-      id: 1,
-      nombre: "Fulano",
-      message: "Mensaje 1",
-    },
-    {
-      id: 2,
-      nombre: "Mengano",
-      message: "Mensaje 2",
-    },
-    {
-      id: 3,
-      nombre: "Juan",
-      message: "Mensaje 3",
-    },
-    {
-      id: 4,
-      nombre: "Manuel",
-      message: "Mensaje 4",
-    },
-    {
-      id: 5,
-      nombre: "Fabrizio",
-      message: "Mensaje 5",
-    },
-  ];
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => scrollToBottom, [messages]);
 
   const handleLogin = async () => {
     try {
@@ -50,15 +34,106 @@ const Chat = () => {
     }
   };
 
-  const handleSendMessage = (e) => {
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    console.log(value);
+
+    if (value.trim() === "") {
+      alert("Ingrese un mensaje válido !");
+      return;
+    }
+
+    try {
+      const { uid, displayName, photoURL } = currentUser;
+      await addDoc(collection(db, "messages"), {
+        text: value,
+        name: displayName,
+        avatar: photoURL,
+        uid: uid,
+        createdAt: serverTimestamp(),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
     setValue("");
     document.querySelector("#input-text").value = null;
   };
 
+  useEffect(() => {
+    const q = query(
+      collection(db, "messages"),
+      orderBy("createdAt"),
+      limit(50)
+    );
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const messages = [];
+      querySnapshot.forEach((doc) => {
+        messages.push({ ...doc.data(), id: doc.id });
+      });
+
+      setMessages(messages);
+    });
+    return () => unsubscribe;
+  }, []);
+
   return (
-    <Stack gap={2} className="chat ">
+    <>
+      <Container className="chat-rom gap-3 px-1">
+        {messages.map((message) => (
+          <Row
+            className={`mx-0 ${
+              currentUser && message.uid === currentUser.uid
+                ? "justify-content-end"
+                : ""
+            }`}
+            key={message.id}
+          >
+            <Col
+              className={`avatar col-auto p-0 m-2 ${
+                currentUser && message.uid === currentUser.uid
+                  ? "order-last"
+                  : ""
+              }`}
+            >
+              <Image src={message.avatar} roundedCircle />
+            </Col>
+            <Col className="">
+              <Row className="row-cols-auto small text-light fw-lighter">
+                <span
+                  className={`px-0 ${
+                    currentUser && message.uid === currentUser.uid
+                      ? "ms-auto text-end"
+                      : ""
+                  }`}
+                >
+                  {message.name} dice:
+                </span>
+              </Row>
+              <Row className="row-cols-auto">
+                <span
+                  className={`fs-6 fw-normal bg-dark text-light rounded ${
+                    currentUser && message.uid === currentUser.uid
+                      ? "ms-auto text-end"
+                      : ""
+                  }`}
+                  key={message.id}
+                >
+                  {message.text}
+                </span>
+              </Row>
+            </Col>
+          </Row>
+        ))}
+        <div ref={messagesEndRef}></div>
+      </Container>
       {currentUser ? (
         <form className="input-group" onSubmit={handleSendMessage}>
           <input
@@ -72,39 +147,20 @@ const Chat = () => {
           <Button variant="dark" type="submit">
             Enviar
           </Button>
+          <Button
+            variant="dark"
+            className="d-flex justify-content-center align-items-center"
+            onClick={handleLogout}
+          >
+            <BoxArrowRight />
+          </Button>
         </form>
       ) : (
         <Button variant="dark" onClick={handleLogin}>
           Ingresar al chat
         </Button>
       )}
-      <Container className="chat-rom gap-1">
-        {messages.map((message) => (
-          <Row xs="auto" className="mx-0" key={message.id}>
-            <Col className="my-auto">
-              <Badge pill bg="dark" text="white">
-                {message.id}
-              </Badge>
-            </Col>
-            <Col>
-              <Row className="small text-light text-start">
-                {message.nombre} dice:
-              </Row>
-              <Row>
-                <Badge
-                  className="text-start fs-6"
-                  bg="dark"
-                  text="white"
-                  key={message.id}
-                >
-                  {message.message}
-                </Badge>
-              </Row>
-            </Col>
-          </Row>
-        ))}
-      </Container>
-    </Stack>
+    </>
   );
 };
 

@@ -54,7 +54,7 @@ const Main = () => {
               </Carousel.Item>
             </Carousel>
           </Col>
-          <Col className="px-lg-0">
+          <Col className="px-lg-0 gap-3 chat vstack">
             <AuthProvider>
               <Chat />
             </AuthProvider>

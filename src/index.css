@@ -30,16 +30,16 @@ nav > div > span {
 
 main {
   margin-top: 10vh;
-
   margin-bottom: 10vh;
 }
 
 footer {
   place-items: center;
+  height: 10vh;
 }
 
 .carousel-item {
-  height: 45vh;
+  height: 38vh;
   overflow: hidden;
 }
 
@@ -49,9 +49,15 @@ footer {
   filter: brightness(0.3);
 }
 
+.chat {
+  max-height: 38vh;
+}
+
 .chat-rom {
+  max-height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 header {
@@ -62,4 +68,14 @@ header {
   height: 80vh;
   display: grid;
   place-items: center;
+}
+
+.avatar {
+  height: 5vh;
+  width: auto;
+}
+
+.avatar > * {
+  max-height: 100%;
+  width: auto;
 }
