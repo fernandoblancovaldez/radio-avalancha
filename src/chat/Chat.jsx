@@ -156,7 +156,7 @@ const Chat = () => {
           </Button>
         </form>
       ) : (
-        <Button variant="dark" onClick={handleLogin}>
+        <Button className="btn-sm" variant="dark" onClick={handleLogin}>
           Ingresar al chat
         </Button>
       )}

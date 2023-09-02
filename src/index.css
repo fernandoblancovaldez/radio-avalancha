@@ -21,7 +21,7 @@ body {
 }
 
 nav > div > span {
-  height: 10vh;
+  height: 8.5vh;
 }
 
 .navbar-nav {
@@ -30,12 +30,15 @@ nav > div > span {
 
 main {
   margin-top: 10vh;
-  margin-bottom: 10vh;
+  height: auto;
+}
+
+.player {
+  height: 6.5vh;
 }
 
 footer {
   place-items: center;
-  height: 10vh;
 }
 
 .carousel-item {
