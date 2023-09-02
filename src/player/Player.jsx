@@ -11,16 +11,17 @@ const Player = () => {
           alt="Escuchame Ente El Ruido"
         />
       </Col>
-      <Col className="p-0 d-flex align-items-center ">
-        <audio controls>
-          <source
-            src /* "http://giss.tv:8000/acbradio.mp3" */="/api/"
-            type="audio/mpeg"
-          />
-        </audio>
-      </Col>
     </Container>
   );
 };
 
 export default Player;
+
+<Col className="p-0 d-flex align-items-center ">
+  <audio controls>
+    <source
+      src /* "http://giss.tv:8000/acbradio.mp3" */="/api/"
+      type="audio/mpeg"
+    />
+  </audio>
+</Col>;
