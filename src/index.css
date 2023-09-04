@@ -16,7 +16,9 @@ body {
   grid-template-rows: auto 1fr auto;
 }
 
-.bg-blur {
+.bg-blur,
+.fade,
+.modal {
   backdrop-filter: blur(0.5rem);
 }
 
@@ -37,8 +39,17 @@ main {
   height: 6.5vh;
 }
 
+.admn-btn {
+  cursor: pointer;
+}
+
+.loader-container {
+  height: 100vh;
+}
+
 footer {
   place-items: center;
+  height: 10vh;
 }
 
 .carousel-item {
@@ -65,12 +76,6 @@ footer {
 
 header {
   transition: all 0.3s ease 0s;
-}
-
-.show {
-  height: 80vh;
-  display: grid;
-  place-items: center;
 }
 
 .avatar {

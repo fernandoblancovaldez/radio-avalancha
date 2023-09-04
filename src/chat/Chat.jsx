@@ -108,7 +108,7 @@ const Chat = () => {
             <Col className="">
               <Row className="row-cols-auto small text-light fw-lighter">
                 <span
-                  className={`px-0 ${
+                  className={`px-0 lh-1 pb-1 ${
                     currentUser && message.uid === currentUser.uid
                       ? "ms-auto text-end"
                       : ""
@@ -119,10 +119,10 @@ const Chat = () => {
               </Row>
               <Row className="row-cols-auto">
                 <span
-                  className={`fs-6 fw-normal bg-dark text-light rounded ${
+                  className={`fs-6 fw-normal text-light rounded  lh-1 py-1 ${
                     currentUser && message.uid === currentUser.uid
-                      ? "ms-auto text-end"
-                      : ""
+                      ? "ms-auto text-end  bg-secondary ps-2 pe-1 bg-opacity-50"
+                      : " bg-dark ps-1 pe-2 bg-opacity-75"
                   }`}
                   key={message.id}
                 >
@@ -135,7 +135,10 @@ const Chat = () => {
         <div ref={messagesEndRef}></div>
       </Container>
       {currentUser ? (
-        <form className="input-group" onSubmit={handleSendMessage}>
+        <form
+          className="input-group input-group-sm"
+          onSubmit={handleSendMessage}
+        >
           <input
             id="input-text"
             className="form-control"
@@ -144,12 +147,12 @@ const Chat = () => {
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <Button variant="dark" type="submit">
+          <Button className="btn-sm" variant="dark" type="submit">
             Enviar
           </Button>
           <Button
             variant="dark"
-            className="d-flex justify-content-center align-items-center"
+            className="btn-sm d-flex justify-content-center align-items-center"
             onClick={handleLogout}
           >
             <BoxArrowRight />

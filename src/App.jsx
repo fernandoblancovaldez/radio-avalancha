@@ -7,8 +7,8 @@ import { AuthProvider } from "./chat/context/AuthContext";
 function App() {
   return (
     <>
+      <RadioPlayerNav />
       <AuthProvider>
-        <RadioPlayerNav />
         <Main />
         <Footer />
       </AuthProvider>

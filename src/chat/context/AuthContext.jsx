@@ -7,8 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../../firebase";
 
-import Stack from "react-bootstrap/Stack";
-import Spinner from "react-bootstrap/Spinner";
+import { Container, Spinner } from "react-bootstrap";
 
 //creando contexto
 const AuthContext = createContext();
@@ -46,9 +45,9 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={value}>
       {loading ? (
-        <Stack className="h-100 align-items-center">
+        <Container className="loader-container d-flex align-items-center justify-content-center">
           <Spinner animation="grow" variant="light" />
-        </Stack>
+        </Container>
       ) : (
         children
       )}
