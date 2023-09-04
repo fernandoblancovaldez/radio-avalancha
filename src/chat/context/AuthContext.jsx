@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={value}>
       {loading ? (
-        <Stack className="h-auto d-flex justify-content-center align-items-center ">
+        <Stack className="h-100 align-items-center">
           <Spinner animation="grow" variant="light" />
         </Stack>
       ) : (

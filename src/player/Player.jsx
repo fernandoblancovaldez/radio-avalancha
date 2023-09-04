@@ -1,4 +1,5 @@
 import { Col, Container, Image } from "react-bootstrap";
+import AdminModal from "../adminModal/AdminModal";
 import EscuchameEntreElRuidoLogo from "../assets/escuchame-entre-el-ruido.png";
 
 const Player = () => {
@@ -11,6 +12,7 @@ const Player = () => {
           alt="Escuchame Ente El Ruido"
         />
       </Col>
+      <AdminModal />
     </Container>
   );
 };

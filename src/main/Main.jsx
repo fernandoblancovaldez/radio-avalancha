@@ -7,7 +7,6 @@ import Slide1 from "../assets/slide1.jpeg";
 import Slide2 from "../assets/slide2.jpeg";
 import Slide3 from "../assets/slide3.jpeg";
 import Chat from "../chat/Chat";
-import { AuthProvider } from "../chat/context/AuthContext";
 
 const Main = () => {
   return (
@@ -55,9 +54,7 @@ const Main = () => {
             </Carousel>
           </Col>
           <Col className="px-lg-0 gap-3 chat vstack">
-            <AuthProvider>
-              <Chat />
-            </AuthProvider>
+            <Chat />
           </Col>
         </Row>
       </Container>
