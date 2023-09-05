@@ -1,26 +1,15 @@
 import { useState } from "react";
 import { UserAuth } from "../chat/context/AuthContext";
-import {
-  doc,
-  deleteDoc,
-  query,
-  collection,
-  onSnapshot,
-  orderBy,
-  limit,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 import { Button, Modal, Image, Col } from "react-bootstrap";
-
 import { BoxArrowRight } from "react-bootstrap-icons";
 import AvalanchaIcon from "../assets/icon-light.png";
 
 const AdminModal = () => {
   const { currentUser, signInWithGoogle, logout } = UserAuth();
   const [show, setShow] = useState(false);
-  const q = query(collection(db, "messages"), orderBy("createdAt"), limit(50));
-  console.log(q);
 
   const handleLogin = async () => {
     try {
@@ -39,17 +28,12 @@ const AdminModal = () => {
   };
 
   const handleClearChat = async () => {
-    const q = query(collection(db, "messages"));
-
-    await onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach(async (doc) => {
-        try {
-          await deleteDoc(doc);
-        } catch (error) {
-          console.log(error);
-        }
-      });
-    });
+    try {
+      const refDoc = doc(db, `chat/messages`);
+      await updateDoc(refDoc, { msgsList: [] });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleClose = () => setShow(false);

@@ -1,14 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { UserAuth } from "./context/AuthContext";
-import {
-  collection,
-  query,
-  onSnapshot,
-  addDoc,
-  serverTimestamp,
-  orderBy,
-  limit,
-} from "firebase/firestore";
+import { onSnapshot, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 import { Button, Row, Col, Container, Image } from "react-bootstrap";
@@ -52,13 +44,16 @@ const Chat = () => {
 
     try {
       const { uid, displayName, photoURL } = currentUser;
-      await addDoc(collection(db, "messages"), {
+      const newMsg = {
         text: value,
         name: displayName,
         avatar: photoURL,
         uid: uid,
-        createdAt: serverTimestamp(),
-      });
+        createdAt: new Date(),
+      };
+
+      const refDoc = doc(db, `chat/messages`);
+      await updateDoc(refDoc, { msgsList: [...messages, newMsg] });
     } catch (error) {
       console.log(error);
     }
@@ -68,19 +63,13 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    const q = query(
-      collection(db, "messages"),
-      orderBy("createdAt"),
-      limit(50)
+    const unsubscribe = onSnapshot(
+      doc(db, `chat/messages`),
+      (querySnapshot) => {
+        const messages = querySnapshot.data().msgsList;
+        setMessages(messages);
+      }
     );
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const messages = [];
-      querySnapshot.forEach((doc) => {
-        messages.push({ ...doc.data(), id: doc.id });
-      });
-
-      setMessages(messages);
-    });
     return () => unsubscribe;
   }, []);
 
@@ -94,7 +83,7 @@ const Chat = () => {
                 ? "justify-content-end"
                 : ""
             }`}
-            key={message.id}
+            key={message.createdAt.seconds}
           >
             <Col
               className={`avatar col-auto p-0 m-2 ${
@@ -124,7 +113,7 @@ const Chat = () => {
                       ? "ms-auto text-end  bg-secondary ps-2 pe-1 bg-opacity-50"
                       : " bg-dark ps-1 pe-2 bg-opacity-75"
                   }`}
-                  key={message.id}
+                  key={message.createdAt.seconds}
                 >
                   {message.text}
                 </span>
@@ -140,6 +129,7 @@ const Chat = () => {
           onSubmit={handleSendMessage}
         >
           <input
+            required
             id="input-text"
             className="form-control"
             type="text"
