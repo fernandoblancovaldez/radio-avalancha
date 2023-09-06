@@ -72,6 +72,14 @@ const AdminModal = () => {
     e.target.postFile.value = "";
   };
 
+  const handleDeletePost = async (pst) => {
+    const newPosts = posts.filter((el) => el.id !== pst.id);
+    const refDoc = doc(db, `app/content`);
+    await updateDoc(refDoc, { posts: [...newPosts] });
+    const fileRef = ref(storage, `imgs/${pst.fileName}`);
+    await deleteObject(fileRef);
+  };
+
   const handleClearChat = async () => {
     try {
       const refDoc = doc(db, `app/chat`);
@@ -158,6 +166,7 @@ const AdminModal = () => {
                       </Col>
                       <Col className="p-0">
                         <Form.Control
+                          required
                           type="file"
                           placeholder="Añade archivo"
                           id="postFile"
@@ -180,6 +189,7 @@ const AdminModal = () => {
                 <Container className="mb-3">
                   <CardGroup className="row justify-content-evenly gap-1">
                     {posts.map((pst) => {
+                      console.log(pst.id);
                       return (
                         <Card key={pst.id} className="col-3 p-0 m-0">
                           <Card.Img
@@ -188,7 +198,12 @@ const AdminModal = () => {
                             className="my-auto"
                           />
                           <Card.ImgOverlay className="p-0">
-                            <Button className="btn-sm btn-danger d-flex justify-content-center align-items-center p-1 rounded-circle m-1">
+                            <Button
+                              onClick={() => {
+                                handleDeletePost(pst);
+                              }}
+                              className="btn-sm btn-danger d-flex justify-content-center align-items-center p-1 rounded-circle m-1"
+                            >
                               <DashLg />
                             </Button>
                           </Card.ImgOverlay>

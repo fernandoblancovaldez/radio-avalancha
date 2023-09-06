@@ -32,9 +32,9 @@ const Main = () => {
                       className="d-block w-100"
                       rounded
                     />
-                    <Carousel.Caption>
+                    <Carousel.Caption className="p-0">
                       <h3 className="fs-5 fw-normal mb-1">{pst.title}</h3>
-                      <p className="fs-6 fw-light mb-1">{pst.text}</p>
+                      <p className="fs-6 fw-light mb-1 lh-1">{pst.text}</p>
                       <Button
                         variant="outline-light"
                         className="btn-sm rounded-circle"

@@ -78,6 +78,10 @@ header {
   transition: all 0.3s ease 0s;
 }
 
+.carousel-indicators {
+  margin-bottom: 0 !important;
+}
+
 .avatar {
   height: 5vh;
   width: auto;
