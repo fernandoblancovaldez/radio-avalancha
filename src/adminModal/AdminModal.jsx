@@ -62,7 +62,6 @@ const AdminModal = () => {
 
       const refDoc = doc(db, `app/content`);
       await updateDoc(refDoc, { posts: [...posts, newPost] });
-      console.log(posts);
     } catch (error) {
       console.log(error);
     }
@@ -78,6 +77,27 @@ const AdminModal = () => {
     await updateDoc(refDoc, { posts: [...newPosts] });
     const fileRef = ref(storage, `imgs/${pst.fileName}`);
     await deleteObject(fileRef);
+  };
+
+  const handleAddRadioData = async (e) => {
+    e.preventDefault();
+    try {
+      const title = e.target.radioDataTitle.value;
+      const text = e.target.radioDataText.value;
+      const newData = {
+        id: +new Date(),
+        title,
+        text,
+      };
+
+      const refDoc = doc(db, `app/content`);
+      await updateDoc(refDoc, { radioData: [newData] });
+    } catch (error) {
+      console.log(error);
+    }
+
+    e.target.radioDataTitle.value = "";
+    e.target.radioDataText.value = "";
   };
 
   const handleClearChat = async () => {
@@ -96,7 +116,6 @@ const AdminModal = () => {
     const unsubscribe = onSnapshot(doc(db, `app/content`), (querySnapshot) => {
       const posts = querySnapshot.data().posts;
       setPosts(posts);
-      console.log(posts);
     });
     return () => unsubscribe;
   }, []);
@@ -149,7 +168,7 @@ const AdminModal = () => {
                       <Col className="col-12 p-0">
                         <Form.Control
                           type="text"
-                          placeholder="Ingresar título del post"
+                          placeholder="Ingresa el tÏtulo del nuevo Flyer"
                           id="postTitle"
                           required
                           size="sm"
@@ -158,7 +177,7 @@ const AdminModal = () => {
                       <Col className="col-12 p-0">
                         <Form.Control
                           type="text"
-                          placeholder="Ingresar texto del post"
+                          placeholder="Ingresa el texto del nuevo Flyer"
                           id="postText"
                           required
                           size="sm"
@@ -189,7 +208,6 @@ const AdminModal = () => {
                 <Container className="mb-3">
                   <CardGroup className="row justify-content-evenly gap-1">
                     {posts.map((pst) => {
-                      console.log(pst.id);
                       return (
                         <Card key={pst.id} className="col-3 p-0 m-0">
                           <Card.Img
@@ -211,6 +229,40 @@ const AdminModal = () => {
                       );
                     })}
                   </CardGroup>
+                </Container>
+                <Container className="mb-3">
+                  <Form onSubmit={handleAddRadioData}>
+                    <Row className="gap-1 align-items-center">
+                      <Col className="col-12 p-0">
+                        <Form.Control
+                          type="text"
+                          placeholder="Ingresar el título del Programa"
+                          id="radioDataTitle"
+                          required
+                          size="sm"
+                        />
+                      </Col>
+                      <Col className="p-0">
+                        <Form.Control
+                          type="text"
+                          placeholder="Ingresar el subtítulo del Programa"
+                          id="radioDataText"
+                          required
+                          size="sm"
+                        />
+                      </Col>
+                      <Col className="p-0 ms-auto col-auto">
+                        <Button
+                          type="submit"
+                          size="sm"
+                          variant="success"
+                          className="d-flex mx-auto p-1"
+                        >
+                          <PlusCircleFill size="1rem" />
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Form>
                 </Container>
                 <Button
                   variant="danger"

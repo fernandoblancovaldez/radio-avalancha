@@ -120,16 +120,13 @@ const Chat = () => {
         <div ref={messagesEndRef}></div>
       </Container>
       {currentUser ? (
-        <form
-          className="input-group input-group-sm"
-          onSubmit={handleSendMessage}
-        >
+        <form className="input-group" onSubmit={handleSendMessage}>
           <input
             required
             id="input-text"
             className="form-control"
             type="text"
-            placeholder="Mensaje"
+            placeholder="Escribe tu mensaje"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
