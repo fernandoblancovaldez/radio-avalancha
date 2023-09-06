@@ -1,0 +1,22 @@
+bbdd messages
+app->	chat->		messages:	{	avatar:
+						createdAt:
+						name:
+						text:
+						uid:		}
+
+
+bbdd flyers
+app->	content->	posts:		{	id:
+						title:
+						text:
+						fileName:
+						fileUrl:	}
+
+
+bbdd radio
+app->	content->	radioData:	{	title:
+						text:
+						streamUrl:		}
+
+	

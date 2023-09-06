@@ -1,56 +1,53 @@
-import Carousel from "react-bootstrap/Carousel";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import Slide1 from "../assets/slide1.jpeg";
-import Slide2 from "../assets/slide2.jpeg";
-import Slide3 from "../assets/slide3.jpeg";
+import { Carousel, Container, Row, Col, Image, Button } from "react-bootstrap";
+import { Download } from "react-bootstrap-icons";
+
 import Chat from "../chat/Chat";
 
+import { onSnapshot, doc } from "firebase/firestore";
+import { db } from "../firebase";
+import { useEffect, useState } from "react";
+
 const Main = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(doc(db, `app/content`), (querySnapshot) => {
+      const posts = querySnapshot.data().posts;
+      setPosts(posts);
+    });
+    return () => unsubscribe;
+  }, []);
   return (
     <main className="w-100">
       <Container className="px-0">
         <Row className="mx-3 gap-3">
           <Col className="col-12 px-0">
             <Carousel>
-              <Carousel.Item>
-                <Image
-                  src={Slide1}
-                  text="Primer Slide"
-                  className="d-block w-100"
-                  rounded
-                />
-                <Carousel.Caption>
-                  <h3>Flyer 1</h3>
-                  <p>Breve descripcion del evento.</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <Image
-                  src={Slide2}
-                  text="Segundo Slide"
-                  className="d-block w-100"
-                  rounded
-                />
-                <Carousel.Caption>
-                  <h3>Flyer 2</h3>
-                  <p>Breve descripcion del evento.</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <Image
-                  src={Slide3}
-                  text="Tercer Slide"
-                  className="d-block w-100"
-                  rounded
-                />
-                <Carousel.Caption>
-                  <h3>Flyer 3</h3>
-                  <p>Breve descripcion del evento.</p>
-                </Carousel.Caption>
-              </Carousel.Item>
+              {posts.map((pst) => {
+                return (
+                  <Carousel.Item key={pst.id}>
+                    <Image
+                      src={pst.fileUrl}
+                      text={pst.title}
+                      className="d-block w-100"
+                      rounded
+                    />
+                    <Carousel.Caption>
+                      <h3 className="fs-5 fw-normal mb-1">{pst.title}</h3>
+                      <p className="fs-6 fw-light mb-1">{pst.text}</p>
+                      <Button
+                        variant="outline-light"
+                        className="btn-sm rounded-circle"
+                        href={pst.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Download />
+                      </Button>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                );
+              })}
             </Carousel>
           </Col>
           <Col className="px-lg-0 gap-3 chat vstack">

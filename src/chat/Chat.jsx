@@ -10,6 +10,7 @@ const Chat = () => {
   const messagesEndRef = useRef();
   const [value, setValue] = useState("");
   const [messages, setMessages] = useState([]);
+
   const { currentUser, signInWithGoogle, logout } = UserAuth();
 
   const scrollToBottom = () => {
@@ -52,70 +53,65 @@ const Chat = () => {
         createdAt: new Date(),
       };
 
-      const refDoc = doc(db, `chat/messages`);
-      await updateDoc(refDoc, { msgsList: [...messages, newMsg] });
+      const refDoc = doc(db, `app/chat`);
+      await updateDoc(refDoc, { messages: [...messages, newMsg] });
     } catch (error) {
       console.log(error);
     }
 
-    setValue("");
     document.querySelector("#input-text").value = null;
+    setValue("");
   };
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(db, `chat/messages`),
-      (querySnapshot) => {
-        const messages = querySnapshot.data().msgsList;
-        setMessages(messages);
-      }
-    );
+    const unsubscribe = onSnapshot(doc(db, `app/chat`), (querySnapshot) => {
+      const messages = querySnapshot.data().messages;
+      setMessages(messages);
+    });
     return () => unsubscribe;
   }, []);
 
   return (
     <>
       <Container className="chat-rom gap-3 px-1">
-        {messages.map((message) => (
+        {messages.map((msg, index) => (
           <Row
             className={`mx-0 ${
-              currentUser && message.uid === currentUser.uid
-                ? "justify-content-end"
+              currentUser && msg.uid === currentUser.uid
+                ? "justify-content-end "
                 : ""
-            }`}
-            key={message.createdAt.seconds}
+            }${index === 1 ? " active" : ""}`}
+            key={msg.createdAt.seconds}
           >
             <Col
               className={`avatar col-auto p-0 m-2 ${
-                currentUser && message.uid === currentUser.uid
-                  ? "order-last"
-                  : ""
+                currentUser && msg.uid === currentUser.uid ? "order-last" : ""
               }`}
             >
-              <Image src={message.avatar} roundedCircle />
+              <Image src={msg.avatar} roundedCircle />
             </Col>
             <Col className="">
               <Row className="row-cols-auto small text-light fw-lighter">
                 <span
                   className={`px-0 lh-1 pb-1 ${
-                    currentUser && message.uid === currentUser.uid
+                    currentUser && msg.uid === currentUser.uid
                       ? "ms-auto text-end"
                       : ""
                   }`}
                 >
-                  {message.name} dice:
+                  {msg.name} dice:
                 </span>
               </Row>
               <Row className="row-cols-auto">
                 <span
                   className={`fs-6 fw-normal text-light rounded  lh-1 py-1 ${
-                    currentUser && message.uid === currentUser.uid
+                    currentUser && msg.uid === currentUser.uid
                       ? "ms-auto text-end  bg-secondary ps-2 pe-1 bg-opacity-50"
                       : " bg-dark ps-1 pe-2 bg-opacity-75"
                   }`}
-                  key={message.createdAt.seconds}
+                  key={msg.createdAt.seconds}
                 >
-                  {message.text}
+                  {msg.text}
                 </span>
               </Row>
             </Col>
