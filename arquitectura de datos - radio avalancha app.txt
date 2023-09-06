@@ -15,7 +15,8 @@ app->	content->	posts:		{	id:
 
 
 bbdd radio
-app->	content->	radioData:	{	title:
+app->	content->	radioData:	{	id:
+						title:
 						text:
 						streamUrl:		}
 
