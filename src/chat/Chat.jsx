@@ -46,11 +46,12 @@ const Chat = () => {
     try {
       const { uid, displayName, photoURL } = currentUser;
       const newMsg = {
-        text: value,
-        name: displayName,
-        avatar: photoURL,
+        id: new Date(),
         uid: uid,
         createdAt: new Date(),
+        avatar: photoURL,
+        name: displayName,
+        text: value,
       };
 
       const refDoc = doc(db, `app/chat`);
@@ -81,7 +82,7 @@ const Chat = () => {
                 ? "justify-content-end "
                 : ""
             }${index === 1 ? " active" : ""}`}
-            key={msg.createdAt.seconds}
+            key={msg.id}
           >
             <Col
               className={`avatar col-auto p-0 m-2 ${
@@ -109,7 +110,6 @@ const Chat = () => {
                       ? "ms-auto text-end  bg-secondary ps-2 pe-1 bg-opacity-50"
                       : " bg-dark ps-1 pe-2 bg-opacity-75"
                   }`}
-                  key={msg.createdAt.seconds}
                 >
                   {msg.text}
                 </span>

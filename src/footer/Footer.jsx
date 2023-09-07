@@ -16,9 +16,9 @@ const Footer = () => {
           alt="Escuchame Ente El Ruido"
         />
       </Col>
-      <Row className="w-100">
+      <Row className="w-100 m-0">
         <Player />
-        <Col className="col-12 d-flex justify-content-center align-items-center pb-2 col lh-1">
+        <Col className="col-12 d-flex justify-content-center align-items-center p-0 col lh-1">
           <small className="lh-1">
             &copy; 2023 <b className="fw-semibold lh-1">Avalancha </b>|
             <em className="lh-1"> Escuchame Entre el Ruido</em>
