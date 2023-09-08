@@ -74,7 +74,7 @@ const Chat = () => {
 
   return (
     <>
-      <Container className="chat-rom gap-3 px-1">
+      <Container className="chat-rom gap-3 px-1 flex-grow-1">
         {messages.map((msg, index) => (
           <Row
             className={`mx-0 ${

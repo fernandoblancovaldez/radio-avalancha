@@ -5,29 +5,26 @@ import AdminModal from "../adminModal/AdminModal";
 
 const Footer = () => {
   return (
-    <footer
-      id="footer"
-      className="text-center text-light fixed-bottom bg-blur d-flex"
-    >
-      <Col className="h-100 p-2 col-auto bg-dark">
-        <Image
-          className="mh-100"
-          src={EscuchameEntreElRuidoLogo}
-          alt="Escuchame Ente El Ruido"
-        />
+    <footer>
+      <Col>
+        <Row className="m-0">
+          <Col className="bg-dark png-cont col-auto d-flex align-items-center p-1">
+            <Image
+              className="h-75"
+              src={EscuchameEntreElRuidoLogo}
+              alt="Escuchame Ente El Ruido"
+            />
+          </Col>
+          <Player />
+          <AdminModal />
+        </Row>
       </Col>
-      <Row className="w-100 m-0">
-        <Player />
-        <Col className="col-12 d-flex justify-content-center align-items-center p-0 col lh-1">
-          <small className="lh-1">
-            &copy; 2023 <b className="fw-semibold lh-1">Avalancha </b>|
-            <em className="lh-1"> Escuchame Entre el Ruido</em>
-          </small>
-        </Col>
-      </Row>
-      <AdminModal />
     </footer>
   );
 };
 
 export default Footer;
+<footer
+  id="footer"
+  className="text-center text-light fixed-bottom bg-blur d-flex"
+></footer>;

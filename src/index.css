@@ -10,10 +10,12 @@ body {
 }
 
 #root {
-  display: grid;
+  /* display: grid; */
   min-height: 100vh;
   width: 100%;
-  grid-template-rows: auto 1fr auto;
+  /* grid-template-rows: auto 1fr auto; */
+  display: flex;
+  flex-direction: column;
 }
 
 .bg-blur,
@@ -22,34 +24,41 @@ body {
   backdrop-filter: blur(0.5rem);
 }
 
-nav > div > span {
-  height: 8.5vh;
+.png-cont {
+  height: 10vh;
 }
 
-.navbar-nav {
-  gap: 2rem;
+.cstm-btn {
+  height: 3rem;
+  width: 3rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.3s ease 0s;
 }
 
-main {
-  margin-top: 10vh;
-  height: auto;
+.cstm-btn:hover,
+.admn-btn:hover {
+  transform: translateY(-5px);
 }
 
-.player {
-  height: 6.5vh;
+.cstm-btn:active,
+.admn-btn:active {
+  transform: translateY(-1px);
 }
 
 .admn-btn {
   cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.fluid-card {
+  flex: 1 1 10rem;
+  object-fit: contain;
 }
 
 .loader-container {
   height: 100vh;
-}
-
-footer {
-  place-items: center;
-  height: 10vh;
 }
 
 .carousel-item {
@@ -72,10 +81,6 @@ footer {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-}
-
-header {
-  transition: all 0.3s ease 0s;
 }
 
 .carousel-indicators {

@@ -18,7 +18,6 @@ import {
   Row,
   Container,
   Card,
-  CardGroup,
 } from "react-bootstrap";
 import { BoxArrowRight, PlusCircleFill, DashLg } from "react-bootstrap-icons";
 import AvalanchaIcon from "../assets/icon-light.png";
@@ -122,9 +121,9 @@ const AdminModal = () => {
 
   return (
     <>
-      <Col className="h-100 p-2 col-auto">
+      <Col className="png-cont col-auto d-flex align-items-center p-1">
         <Image
-          className="mh-100 admn-btn"
+          className="h-75 admn-btn"
           src={AvalanchaIcon}
           alt="Escuchame Ente El Ruido"
           onClick={handleShow}
@@ -132,19 +131,19 @@ const AdminModal = () => {
       </Col>
 
       <Modal centered backdrop="static" show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="py-2 px-3">
           <Modal.Title>Panel de Administrador</Modal.Title>
         </Modal.Header>
         {!currentUser ? (
-          <Modal.Body className="d-flex align-items-center justify-content-center">
+          <Modal.Body className="d-flex align-items-center justify-content-center p-2">
             <Button className="btn-dark btn-sm" onClick={handleLogin}>
               Ingresar como administrador
             </Button>
           </Modal.Body>
         ) : (
-          <Modal.Body className="d-flex justify-content-center modal-dialog-scrollable">
+          <Modal.Body className="modal-dialog-scrollable py-2 px-3">
             {currentUser.email !== "fernandoblancovaldez@gmail.com" ? (
-              <Modal.Body>
+              <>
                 <p className="d-block">
                   No tienes autorización para administrar éste sitio pero puedes
                   participar del chat, bienvenido!
@@ -156,13 +155,14 @@ const AdminModal = () => {
                 >
                   <BoxArrowRight />
                 </Button>
-              </Modal.Body>
+                <div className="text-center fs-6 fw-light">cerrar sesión</div>
+              </>
             ) : (
-              <Modal.Body>
-                <p className="d-block fw-bold">
+              <>
+                <p className="d-block fw-bold mb-2">
                   {currentUser.displayName}, bienvenido !
                 </p>
-                <Container className="mb-3">
+                <Container className="mb-2">
                   <Form onSubmit={handleAddPost}>
                     <Row className="gap-1 align-items-center">
                       <Col className="col-12 p-0">
@@ -171,7 +171,6 @@ const AdminModal = () => {
                           placeholder="Ingresa el tÏtulo del nuevo Flyer"
                           id="postTitle"
                           required
-                          size="sm"
                         />
                       </Col>
                       <Col className="col-12 p-0">
@@ -180,7 +179,6 @@ const AdminModal = () => {
                           placeholder="Ingresa el texto del nuevo Flyer"
                           id="postText"
                           required
-                          size="sm"
                         />
                       </Col>
                       <Col className="p-0">
@@ -189,7 +187,6 @@ const AdminModal = () => {
                           type="file"
                           placeholder="Añade archivo"
                           id="postFile"
-                          size="sm"
                         />
                       </Col>
                       <Col xs="auto" className="p-0 ms-auto">
@@ -205,32 +202,31 @@ const AdminModal = () => {
                     </Row>
                   </Form>
                 </Container>
-                <Container className="mb-3">
-                  <CardGroup className="row justify-content-evenly gap-1">
-                    {posts.map((pst) => {
-                      return (
-                        <Card key={pst.id} className="col-3 p-0 m-0">
-                          <Card.Img
-                            src={pst.fileUrl}
-                            alt={pst.title}
-                            className="my-auto"
-                          />
-                          <Card.ImgOverlay className="p-0">
-                            <Button
-                              onClick={() => {
-                                handleDeletePost(pst);
-                              }}
-                              className="btn-sm btn-danger d-flex justify-content-center align-items-center p-1 rounded-circle m-1"
-                            >
-                              <DashLg />
-                            </Button>
-                          </Card.ImgOverlay>
-                        </Card>
-                      );
-                    })}
-                  </CardGroup>
+                <Container className="m-0 row">
+                  {posts.map((pst) => {
+                    return (
+                      <Card key={pst.id} className="p-0 b-0 fluid-card">
+                        <Card.Img
+                          style={{ maxHeight: "7rem", objectFit: "contain" }}
+                          src={pst.fileUrl}
+                          alt={pst.title}
+                          className="my-auto"
+                        />
+                        <Card.ImgOverlay className="p-0">
+                          <Button
+                            onClick={() => {
+                              handleDeletePost(pst);
+                            }}
+                            className="btn-sm btn-danger d-flex justify-content-center align-items-center p-1 rounded-circle m-1"
+                          >
+                            <DashLg />
+                          </Button>
+                        </Card.ImgOverlay>
+                      </Card>
+                    );
+                  })}
                 </Container>
-                <Container className="mb-3">
+                <Container className="my-2">
                   <Form onSubmit={handleAddRadioData}>
                     <Row className="gap-1 align-items-center">
                       <Col className="col-12 p-0">
@@ -239,7 +235,6 @@ const AdminModal = () => {
                           placeholder="Ingresar el título del Programa"
                           id="radioDataTitle"
                           required
-                          size="sm"
                         />
                       </Col>
                       <Col className="p-0">
@@ -248,7 +243,6 @@ const AdminModal = () => {
                           placeholder="Ingresar el subtítulo del Programa"
                           id="radioDataText"
                           required
-                          size="sm"
                         />
                       </Col>
                       <Col className="p-0 ms-auto col-auto">
@@ -267,7 +261,7 @@ const AdminModal = () => {
                 <Button
                   variant="danger"
                   onClick={handleClearChat}
-                  className="btn-sm d-flex justify-content-center align-items-center mx-auto mb-3"
+                  className="btn-sm d-flex justify-content-center align-items-center mx-auto mb-2"
                 >
                   Limpiar chat
                 </Button>
@@ -278,25 +272,16 @@ const AdminModal = () => {
                 >
                   <BoxArrowRight />
                 </Button>
-              </Modal.Body>
+                <div className="text-center fs-6 fw-light">cerrar sesión</div>
+              </>
             )}
           </Modal.Body>
         )}
 
-        <Modal.Footer>
+        <Modal.Footer className="py-2 px-3">
           <Button className="btn-sm" variant="secondary" onClick={handleClose}>
             Volver
           </Button>
-          {currentUser &&
-            currentUser.email === "fernandoblancovaldez@gmail.com" && (
-              <Button
-                className="btn-sm"
-                variant="primary"
-                onClick={handleClose}
-              >
-                Guardar cambios
-              </Button>
-            )}
         </Modal.Footer>
       </Modal>
     </>
