@@ -70,7 +70,7 @@ const Player = () => {
         <Col className="d-flex justify-content-center align-items-center">
           <audio
             ref={audioPlayer}
-            src="http://giss.tv:8000/acbradio.mp3" /* ="/api/" */
+            src /* ="http://giss.tv:8000/acbradio.mp3"  */="/api/"
           ></audio>
           <Col className="col-auto d-flex">
             <Col className="cstm-btn text-light">
