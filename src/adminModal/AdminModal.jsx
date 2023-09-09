@@ -121,9 +121,9 @@ const AdminModal = () => {
 
   return (
     <>
-      <Col className="png-cont col-auto d-flex align-items-center p-1">
+      <Col className="ftr-icon-cont d-flex align-items-center p-1 admn-btn ">
         <Image
-          className="h-75 admn-btn"
+          className="h-75 mx-auto"
           src={AvalanchaIcon}
           alt="Escuchame Ente El Ruido"
           onClick={handleShow}

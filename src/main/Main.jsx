@@ -19,7 +19,7 @@ const Main = () => {
   }, []);
   return (
     <main className="w-100 flex-grow-1 d-flex">
-      <Container className="my-3 px-0 flex-grow-1 d-flex flex-column">
+      <Container className="my-2 gap-2 px-0 flex-grow-1 d-flex flex-column">
         <Col className="px-0 flex-grow-1">
           <Carousel>
             {posts.map((pst) => {

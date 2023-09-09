@@ -1,30 +1,23 @@
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import Player from "../player/Player";
-import EscuchameEntreElRuidoLogo from "../assets/escuchame-entre-el-ruido.png";
-import AdminModal from "../adminModal/AdminModal";
 
 const Footer = () => {
   return (
     <footer>
-      <Col>
-        <Row className="m-0">
-          <Col className="bg-dark png-cont col-auto d-flex align-items-center p-1">
-            <Image
-              className="h-75"
-              src={EscuchameEntreElRuidoLogo}
-              alt="Escuchame Ente El Ruido"
-            />
-          </Col>
-          <Player />
-          <AdminModal />
-        </Row>
+      <Player />
+      <Col
+        className="text-center lh-1 text-light flex-grow-1 my-auto fixed-bottom"
+        style={{ fontSize: "0.75rem" }}
+      >
+        <p className="m-0">
+          <small className="lh-1">
+            &copy; 2023 <b className="fw-semibold lh-1">Avalancha </b>|
+            <em className="lh-1"> Escuchame Entre el Ruido</em>
+          </small>
+        </p>
       </Col>
     </footer>
   );
 };
 
 export default Footer;
-<footer
-  id="footer"
-  className="text-center text-light fixed-bottom bg-blur d-flex"
-></footer>;

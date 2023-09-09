@@ -1,4 +1,5 @@
-import { Row, Col, Button, Badge } from "react-bootstrap";
+import { Col, Image } from "react-bootstrap";
+import EscuchameEntreElRuidoLogo from "../assets/escuchame-entre-el-ruido.png";
 import {
   PlayFill,
   PauseFill,
@@ -55,46 +56,57 @@ const Player = () => {
     return () => unsubscribe;
   }, []);
   return (
-    <Col className="p-0 d-flex flex-column">
-      <Col className="px-1 d-flex align-items-center flex-grow-1">
-        <Col className="text-light">
+    <Col className="px-0 d-flex align-items-center">
+      <Col className="d-flex col-4">
+        <Col className="bg-dark ftr-icon-cont col-auto d-flex align-items-center p-1">
+          <Image
+            className="h-75 mx-auto"
+            src={EscuchameEntreElRuidoLogo}
+            alt="Escuchame Ente El Ruido"
+          />
+        </Col>
+        <Col className="text-light text-truncate">
           <Col>
-            <Col>
-              <Badge bg="dark">{radioData.title}</Badge>
-            </Col>
-            <Col className="ps-2">
-              <small>{radioData.text}</small>
-            </Col>
-          </Col>
-        </Col>
-        <Col className="d-flex justify-content-center align-items-center">
-          <audio
-            ref={audioPlayer}
-            src /* ="http://giss.tv:8000/acbradio.mp3"  */="/api/"
-          ></audio>
-          <Col className="col-auto d-flex">
-            <Col className="cstm-btn text-light">
-              <SkipBackwardFill onClick={handleBackward} />
-            </Col>
             <Col
-              className="cstm-btn bg-dark rounded-circle text-light"
-              onClick={handleTogglePlayPause}
+              className="bg-dark rounded ps-1 ms-1 fw-semibold"
+              style={{ fontSize: "0.75rem" }}
             >
-              {isPlaying ? <PauseFill size={30} /> : <PlayFill size={30} />}
-            </Col>
-            <Col className="cstm-btn text-light">
-              <SkipForwardFill onClick={handleForward} className="" />
+              {radioData.title}
             </Col>
           </Col>
+          <Col className="ps-2" style={{ fontSize: "0.75rem" }}>
+            <small>{radioData.text}</small>
+          </Col>
         </Col>
-        <Col></Col>
       </Col>
-      <Col className="text-center lh-1 text-light flex-grow-0">
-        <small className="lh-1">
-          &copy; 2023 <b className="fw-semibold lh-1">Avalancha </b>|
-          <em className="lh-1"> Escuchame Entre el Ruido</em>
-        </small>
+      <Col className="d-flex justify-content-center align-items-center">
+        <audio
+          ref={audioPlayer}
+          src /* ="http://giss.tv:8000/acbradio.mp3"  */="/api/"
+        ></audio>
+        <Col className="col-auto d-flex align-items-center">
+          <SkipBackwardFill
+            className="cstm-btn text-light me-2"
+            onClick={handleBackward}
+          />
+          <Col
+            className="cstm-btn bg-dark rounded-circle text-light d-flex justify-content-center align-items-center play-btn"
+            style={{ height: "6vh", width: "6vh" }}
+            onClick={handleTogglePlayPause}
+          >
+            {isPlaying ? (
+              <PauseFill style={{ fontSize: "5.5vh" }} />
+            ) : (
+              <PlayFill style={{ fontSize: "5.5vh" }} />
+            )}
+          </Col>
+          <SkipForwardFill
+            onClick={handleForward}
+            className="cstm-btn text-light ms-2"
+          />
+        </Col>
       </Col>
+      <Col></Col>
     </Col>
   );
 };
