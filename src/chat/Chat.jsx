@@ -8,6 +8,7 @@ import { BoxArrowRight } from "react-bootstrap-icons";
 
 const Chat = () => {
   const messagesEndRef = useRef();
+  const chatBoxRef = useRef();
   const [value, setValue] = useState("");
   const [messages, setMessages] = useState([]);
 
@@ -16,8 +17,14 @@ const Chat = () => {
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
-  useEffect(() => scrollToBottom, [messages]);
+  useEffect(() => {
+    const { scrollHeight, scrollTop, clientHeight } = chatBoxRef.current;
+    const adicional = clientHeight * 0.5;
+    //console.log(scrollTop, clientHeight, scrollHeight, adicional);
+    scrollTop + clientHeight + adicional >= scrollHeight
+      ? scrollToBottom()
+      : null;
+  }, [messages]);
 
   const handleLogin = async () => {
     try {
@@ -74,7 +81,7 @@ const Chat = () => {
 
   return (
     <>
-      <Container className="chat-rom gap-3 px-1 flex-grow-1">
+      <Container className="chat-rom gap-2 px-1 flex-grow-1" ref={chatBoxRef}>
         {messages.map((msg, index) => (
           <Row
             className={`mx-0 ${

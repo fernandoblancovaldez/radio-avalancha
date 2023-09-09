@@ -19,7 +19,7 @@ const Main = () => {
   }, []);
   return (
     <main className="w-100 flex-grow-1 d-flex">
-      <Container className="my-2 gap-2 px-0 flex-grow-1 d-flex flex-column">
+      <Container className="my-2 px-0 flex-grow-1 d-flex flex-column">
         <Col className="px-0 flex-grow-1">
           <Carousel>
             {posts.map((pst) => {
@@ -51,7 +51,7 @@ const Main = () => {
             })}
           </Carousel>
         </Col>
-        <Col className="px-1 px-lg-0 gap-3 chat vstack flex-grow-1">
+        <Col className="px-1 px-lg-0 gap-2 chat vstack flex-grow-1">
           <Chat />
         </Col>
       </Container>

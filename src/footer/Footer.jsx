@@ -1,4 +1,4 @@
-import { Row, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import Player from "../player/Player";
 
 const Footer = () => {
@@ -6,7 +6,7 @@ const Footer = () => {
     <footer>
       <Player />
       <Col
-        className="text-center lh-1 text-light flex-grow-1 my-auto fixed-bottom"
+        className="text-center lh-1 text-light flex-grow-1 my-auto fixed-bottom bg-blur"
         style={{ fontSize: "0.75rem" }}
       >
         <p className="m-0">
