@@ -1,4 +1,4 @@
-import { Col, Image } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import EscuchameEntreElRuidoLogo from "../assets/escuchame-entre-el-ruido.png";
 import {
   PlayFill,
@@ -56,7 +56,7 @@ const Player = () => {
     return () => unsubscribe;
   }, []);
   return (
-    <Col className="px-0 d-flex align-items-center">
+    <Col className="px-0 d-flex align-items-start">
       <Col className="d-flex col-4">
         <Col className="bg-dark ftr-icon-cont col-auto d-flex align-items-center p-1">
           <Image
@@ -66,14 +66,14 @@ const Player = () => {
           />
         </Col>
         <Col className="text-light text-truncate">
-          <Col>
+          <Row className="row-cols-auto m-0">
             <Col
               className="bg-dark rounded ps-1 ms-1 fw-semibold"
               style={{ fontSize: "0.75rem" }}
             >
               {radioData.title}
             </Col>
-          </Col>
+          </Row>
           <Col className="ps-2" style={{ fontSize: "0.75rem" }}>
             <small>{radioData.text}</small>
           </Col>
