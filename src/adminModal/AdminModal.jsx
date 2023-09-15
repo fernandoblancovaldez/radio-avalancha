@@ -142,7 +142,7 @@ const AdminModal = () => {
           </Modal.Body>
         ) : (
           <Modal.Body className="modal-dialog-scrollable py-2 px-3">
-            {currentUser.email !== "fernandoblancovaldez@gmail.com" ? (
+            {currentUser.email !== "ccastronuevo@gmail.com" ? (
               <>
                 <p className="d-block">
                   No tienes autorización para administrar éste sitio pero puedes
