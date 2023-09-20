@@ -1,3 +1,8 @@
+@font-face {
+  font-family: RotheDemoRegular-vLvZ;
+  src: url(./assets/RotheDemoRegular-vLvZ.ttf);
+}
+
 body {
   margin: 0;
   display: flex;
@@ -18,6 +23,10 @@ body {
   flex-direction: column;
 }
 
+h1 {
+  font-family: RotheDemoRegular-vLvZ;
+}
+
 .bg-blur,
 .fade,
 .modal {
@@ -25,8 +34,14 @@ body {
 }
 
 .hdr-lgo-cont {
-  height: 10vh;
+  height: 15vh;
 }
+
+.avalancha-logo {
+  height: 2.25vh;
+  width: auto;
+}
+
 .ftr-icon-cont {
   height: 10vh;
   width: 10vh;
