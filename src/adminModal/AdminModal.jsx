@@ -215,7 +215,7 @@ const AdminModal = () => {
             ) : (
               <>
                 <p className="d-block fw-bold mb-2">
-                  {currentUser.displayName}, bienvenido !
+                  {currentUser.displayName}, bienvenid@ !
                 </p>
                 <Row className="justify-content-center">
                   <Col
