@@ -19,13 +19,25 @@ import {
   Container,
   Card,
 } from "react-bootstrap";
-import { BoxArrowRight, PlusCircleFill, DashLg } from "react-bootstrap-icons";
+import {
+  BoxArrowRight,
+  PlusCircleFill,
+  DashLg,
+  ArrowClockwise,
+} from "react-bootstrap-icons";
 import AvalanchaIcon from "../assets/icon-light.png";
 
 const AdminModal = () => {
   const { currentUser, signInWithGoogle, logout } = UserAuth();
   const [show, setShow] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [visitorsIps, setVisitorsIps] = useState([]);
+
+  const userEmail = currentUser ? currentUser.email : "usuario no loggeado";
+  console.log(userEmail);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleLogin = async () => {
     try {
@@ -108,8 +120,50 @@ const AdminModal = () => {
     }
   };
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClearVisitors = async () => {
+    try {
+      const refDoc = doc(db, `app/users`);
+      await updateDoc(refDoc, { visitors: [] });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const readIp = async () => {
+      try {
+        const ip = await fetch("https://api.ipify.org?format=json");
+        const json = await ip.json();
+
+        const refDoc = doc(db, `app/users`);
+
+        if (
+          userEmail === "ccastronuevo@gmail.com" ||
+          userEmail === "fernandoblancovaldez@gmail.com"
+        ) {
+          await updateDoc(refDoc, { admins: [json.ip] });
+        } else {
+          const newVisitors = [...visitorsIps, json.ip];
+          const removeDuplicates = (arr) => {
+            return [...new Set(arr)];
+          };
+          const updatedVisitors = removeDuplicates(newVisitors);
+          await updateDoc(refDoc, { visitors: [...updatedVisitors] });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    readIp();
+  }, [userEmail, visitorsIps]);
+
+  useEffect(() => {
+    const getVisitors = onSnapshot(doc(db, `app/users`), (querySnapshot) => {
+      const visitors = querySnapshot.data().visitors;
+      setVisitorsIps(visitors);
+    });
+    return () => getVisitors;
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, `app/content`), (querySnapshot) => {
@@ -142,7 +196,8 @@ const AdminModal = () => {
           </Modal.Body>
         ) : (
           <Modal.Body className="modal-dialog-scrollable py-2 px-3">
-            {currentUser.email !== "ccastronuevo@gmail.com" ? (
+            {userEmail !== "ccastronuevo@gmail.com" &&
+            userEmail !== "fernandoblancovaldez@gmail.com" ? (
               <>
                 <p className="d-block">
                   No tienes autorización para administrar éste sitio pero puedes
@@ -162,6 +217,22 @@ const AdminModal = () => {
                 <p className="d-block fw-bold mb-2">
                   {currentUser.displayName}, bienvenido !
                 </p>
+                <Row className="justify-content-center">
+                  <Col
+                    className="bg-primary position-relative text-light rounded p-2 mb-1 col-auto fw-semibold d-flex align-items-center justify-content-center"
+                    style={{ fontSize: "0.75rem" }}
+                  >
+                    {visitorsIps.length}{" "}
+                    {visitorsIps.length === 1 ? "visita" : "visitas"}
+                    <Button
+                      className="btn-sm d-flex justify-content-center align-items-center position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
+                      onClick={handleClearVisitors}
+                    >
+                      <ArrowClockwise />
+                    </Button>
+                  </Col>
+                </Row>
+
                 <Container className="mb-2">
                   <Form onSubmit={handleAddPost}>
                     <Row className="gap-1 align-items-center">
@@ -258,6 +329,7 @@ const AdminModal = () => {
                     </Row>
                   </Form>
                 </Container>
+
                 <Button
                   variant="danger"
                   onClick={handleClearChat}
@@ -272,6 +344,7 @@ const AdminModal = () => {
                 >
                   <BoxArrowRight />
                 </Button>
+
                 <div className="text-center fs-6 fw-light">cerrar sesión</div>
               </>
             )}
