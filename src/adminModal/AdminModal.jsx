@@ -147,11 +147,8 @@ const AdminModal = () => {
           console.log(newVisitor);
           const newVisitors = [...visitorsIps, newVisitor];
           console.log(newVisitors);
-          const removeDuplicates = (arr) => {
-            return [...new Set(arr)];
-          };
-          const updatedVisitors = removeDuplicates(newVisitors);
-          await updateDoc(refDoc, { visitors: [...newVisitors] });
+
+          await updateDoc(refDoc, { visitors: [...visitorsIps, newVisitor] });
         }
       } catch (err) {
         console.log(err);
@@ -163,7 +160,11 @@ const AdminModal = () => {
   useEffect(() => {
     const getVisitors = onSnapshot(doc(db, `app/users`), (querySnapshot) => {
       const visitors = querySnapshot.data().visitors;
-      setVisitorsIps(visitors);
+      const removeDuplicates = (arr) => {
+        return [...new Set(arr)];
+      };
+      const updatedVisitors = removeDuplicates(visitors);
+      setVisitorsIps(updatedVisitors);
     });
     return () => getVisitors;
   }, []);
