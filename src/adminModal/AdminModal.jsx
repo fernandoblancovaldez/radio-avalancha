@@ -31,11 +31,9 @@ const AdminModal = () => {
   const { currentIp, currentUser, signInWithGoogle, logout } = UserAuth();
   const [show, setShow] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [visitorsIps, setVisitorsIps] = useState([]);
+  const [visitorsIps, setVisitorsIps] = useState();
 
   const userEmail = currentUser ? currentUser.email : "usuario no loggeado";
-  //console.log(userEmail);
-  //console.log(currentIp);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -131,47 +129,40 @@ const AdminModal = () => {
   };
 
   useEffect(() => {
-    const readIp = async () => {
-      try {
-        const refDoc = doc(db, `app/users`);
-        if (
-          userEmail === "ccastronuevo@gmail.com" ||
-          userEmail === "fernandoblancovaldez@gmail.com"
-        ) {
-          await updateDoc(refDoc, { admins: [currentIp] });
-        } else {
-          console.log(currentIp);
-          const newVisitors = [...visitorsIps, currentIp];
-          console.log(newVisitors);
-          await updateDoc(refDoc, { visitors: [...visitorsIps, currentIp] });
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    return readIp;
-  }, []);
-
-  useEffect(() => {
     const getVisitors = onSnapshot(doc(db, `app/users`), (querySnapshot) => {
       const visitors = querySnapshot.data().visitors;
-      const removeDuplicates = (arr) => {
-        return [...new Set(arr)];
-      };
-      const updatedVisitors = removeDuplicates(visitors);
-
-      console.log(updatedVisitors);
-      setVisitorsIps(visitors);
+      let currentIp;
+      let ipRepeated;
+      fetch("https://api.ipify.org?format=json")
+        .then((res) => res.json())
+        .then((json) => {
+          currentIp = json.ip;
+          ipRepeated = visitors.find((ip) => ip === currentIp);
+          if (ipRepeated !== undefined) {
+            setVisitorsIps(visitors);
+          } else {
+            const refDoc = doc(db, `app/users`);
+            if (
+              userEmail === "ccastronuevo@gmail.com" ||
+              userEmail === "fernandoblancovaldez@gmail.com"
+            ) {
+              updateDoc(refDoc, { admins: [currentIp] });
+            } else {
+              updateDoc(refDoc, { visitors: [...visitors, currentIp] });
+            }
+          }
+        })
+        .catch((err) => console.log(err));
     });
     return getVisitors;
-  }, []);
+  }, [userEmail]);
 
   useEffect(() => {
-    const readPosts = onSnapshot(doc(db, `app/content`), (querySnapshot) => {
+    const unsubscribe = onSnapshot(doc(db, `app/content`), (querySnapshot) => {
       const posts = querySnapshot.data().posts;
       setPosts(posts);
     });
-    return readPosts;
+    return unsubscribe;
   }, []);
 
   return (

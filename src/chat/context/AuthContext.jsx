@@ -15,7 +15,7 @@ const AuthContext = createContext();
 //proveyendo contexto
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [currentIp, setCurrentIp] = useState("");
+  //const [currentIp, setCurrentIp] = useState("");
   const [loading, setLoading] = useState(true);
   //sign-in with google
   const signInWithGoogle = () => {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => signOut(auth);
 
   const value = {
-    currentIp,
+    // currentIp,
     currentUser,
     signInWithGoogle,
     logout,
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   //set current ip
-  useEffect(() => {
+  /* useEffect(() => {
     const unsuscribe = async () => {
       try {
         const ip = await fetch("https://api.ipify.org?format=json");
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return unsuscribe;
-  }, []);
+  }, []); */
 
   return (
     <AuthContext.Provider value={value}>

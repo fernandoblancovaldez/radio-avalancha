@@ -1,4 +1,4 @@
-import { Carousel, Container, Row, Col, Image, Button } from "react-bootstrap";
+import { Carousel, Container, Col, Image, Button } from "react-bootstrap";
 import { Download } from "react-bootstrap-icons";
 
 import Chat from "../chat/Chat";
