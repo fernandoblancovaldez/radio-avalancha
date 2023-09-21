@@ -143,19 +143,22 @@ const AdminModal = () => {
         ) {
           await updateDoc(refDoc, { admins: [json.ip] });
         } else {
-          const newVisitors = [...visitorsIps, json.ip];
+          const newVisitor = json.ip;
+          console.log(newVisitor);
+          const newVisitors = [...visitorsIps, newVisitor];
+          console.log(newVisitors);
           const removeDuplicates = (arr) => {
             return [...new Set(arr)];
           };
           const updatedVisitors = removeDuplicates(newVisitors);
-          await updateDoc(refDoc, { visitors: [...updatedVisitors] });
+          await updateDoc(refDoc, { visitors: [...newVisitors] });
         }
       } catch (err) {
         console.log(err);
       }
     };
     readIp();
-  }, [userEmail, visitorsIps]);
+  }, []);
 
   useEffect(() => {
     const getVisitors = onSnapshot(doc(db, `app/users`), (querySnapshot) => {
