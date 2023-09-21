@@ -28,13 +28,14 @@ import {
 import AvalanchaIcon from "../assets/icon-light.png";
 
 const AdminModal = () => {
-  const { currentUser, signInWithGoogle, logout } = UserAuth();
+  const { currentIp, currentUser, signInWithGoogle, logout } = UserAuth();
   const [show, setShow] = useState(false);
   const [posts, setPosts] = useState([]);
   const [visitorsIps, setVisitorsIps] = useState([]);
 
   const userEmail = currentUser ? currentUser.email : "usuario no loggeado";
-  console.log(userEmail);
+  //console.log(userEmail);
+  //console.log(currentIp);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -132,29 +133,23 @@ const AdminModal = () => {
   useEffect(() => {
     const readIp = async () => {
       try {
-        const ip = await fetch("https://api.ipify.org?format=json");
-        const json = await ip.json();
-
         const refDoc = doc(db, `app/users`);
-
         if (
           userEmail === "ccastronuevo@gmail.com" ||
           userEmail === "fernandoblancovaldez@gmail.com"
         ) {
-          await updateDoc(refDoc, { admins: [json.ip] });
+          await updateDoc(refDoc, { admins: [currentIp] });
         } else {
-          const newVisitor = json.ip;
-          console.log(newVisitor);
-          const newVisitors = [...visitorsIps, newVisitor];
+          console.log(currentIp);
+          const newVisitors = [...visitorsIps, currentIp];
           console.log(newVisitors);
-
-          await updateDoc(refDoc, { visitors: [...visitorsIps, newVisitor] });
+          await updateDoc(refDoc, { visitors: [...visitorsIps, currentIp] });
         }
       } catch (err) {
         console.log(err);
       }
     };
-    readIp();
+    return readIp;
   }, []);
 
   useEffect(() => {
@@ -164,17 +159,19 @@ const AdminModal = () => {
         return [...new Set(arr)];
       };
       const updatedVisitors = removeDuplicates(visitors);
-      setVisitorsIps(updatedVisitors);
+
+      console.log(updatedVisitors);
+      setVisitorsIps(visitors);
     });
-    return () => getVisitors;
+    return getVisitors;
   }, []);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(doc(db, `app/content`), (querySnapshot) => {
+    const readPosts = onSnapshot(doc(db, `app/content`), (querySnapshot) => {
       const posts = querySnapshot.data().posts;
       setPosts(posts);
     });
-    return () => unsubscribe;
+    return readPosts;
   }, []);
 
   return (
