@@ -123,6 +123,7 @@ const AdminModal = () => {
     try {
       const refDoc = doc(db, `app/users`);
       await updateDoc(refDoc, { visitors: [] });
+      setVisitorsIps([]);
     } catch (error) {
       console.log(error);
     }
@@ -137,6 +138,7 @@ const AdminModal = () => {
         .then((res) => res.json())
         .then((json) => {
           currentIp = json.ip;
+          console.log(visitors);
           ipRepeated = visitors.find((ip) => ip === currentIp);
           if (ipRepeated !== undefined) {
             setVisitorsIps(visitors);
@@ -155,14 +157,14 @@ const AdminModal = () => {
         .catch((err) => console.log(err));
     });
     return getVisitors;
-  }, [userEmail]);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, `app/content`), (querySnapshot) => {
       const posts = querySnapshot.data().posts;
       setPosts(posts);
     });
-    return unsubscribe;
+    return () => unsubscribe;
   }, []);
 
   return (
