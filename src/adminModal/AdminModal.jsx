@@ -138,7 +138,6 @@ const AdminModal = () => {
         .then((res) => res.json())
         .then((json) => {
           currentIp = json.ip;
-          console.log(visitors);
           ipRepeated = visitors.find((ip) => ip === currentIp);
           if (ipRepeated !== undefined) {
             setVisitorsIps(visitors);
@@ -149,6 +148,7 @@ const AdminModal = () => {
               userEmail === "fernandoblancovaldez@gmail.com"
             ) {
               updateDoc(refDoc, { admins: [currentIp] });
+              setVisitorsIps(visitors);
             } else {
               updateDoc(refDoc, { visitors: [...visitors, currentIp] });
             }
