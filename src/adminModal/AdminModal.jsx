@@ -145,7 +145,8 @@ const AdminModal = () => {
             const refDoc = doc(db, `app/users`);
             if (
               userEmail === "ccastronuevo@gmail.com" ||
-              userEmail === "fernandoblancovaldez@gmail.com"
+              userEmail === "fernandoblancovaldez@gmail.com" ||
+              userEmail === "avalanchaproduccionesok@gmail"
             ) {
               updateDoc(refDoc, { admins: [currentIp] });
               setVisitorsIps(visitors);
@@ -191,6 +192,7 @@ const AdminModal = () => {
         ) : (
           <Modal.Body className="modal-dialog-scrollable py-2 px-3">
             {userEmail !== "ccastronuevo@gmail.com" &&
+              userEmail !== "avalanchaproduccionesok@gmail" &&
             userEmail !== "fernandoblancovaldez@gmail.com" ? (
               <>
                 <p className="d-block">
