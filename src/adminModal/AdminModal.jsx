@@ -28,10 +28,10 @@ import {
 import AvalanchaIcon from "../assets/icon-light.png";
 
 const AdminModal = () => {
-  const { currentIp, currentUser, signInWithGoogle, logout } = UserAuth();
+  const { currentUser, signInWithGoogle, logout } = UserAuth();
   const [show, setShow] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [visitorsIps, setVisitorsIps] = useState();
+  const [visitorsIps, setVisitorsIps] = useState([]);
 
   const userEmail = currentUser ? currentUser.email : "usuario no loggeado";
 
