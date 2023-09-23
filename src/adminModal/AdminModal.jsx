@@ -92,8 +92,8 @@ const AdminModal = () => {
   const handleAddRadioData = async (e) => {
     e.preventDefault();
     try {
-      const title = e.target.radioDataTitle.value;
-      const text = e.target.radioDataText.value;
+      const title = e.target.radioDataTitle.value || "";
+      const text = e.target.radioDataText.value || "";
       const newData = {
         id: +new Date(),
         title,
@@ -192,7 +192,7 @@ const AdminModal = () => {
         ) : (
           <Modal.Body className="modal-dialog-scrollable py-2 px-3">
             {userEmail !== "ccastronuevo@gmail.com" &&
-              userEmail !== "avalanchaproduccionesok@gmail" &&
+            userEmail !== "avalanchaproduccionesok@gmail" &&
             userEmail !== "fernandoblancovaldez@gmail.com" ? (
               <>
                 <p className="d-block">
@@ -234,18 +234,18 @@ const AdminModal = () => {
                     <Row className="gap-1 align-items-center">
                       <Col className="col-12 p-0">
                         <Form.Control
+                          //required
                           type="text"
                           placeholder="Ingresa el tÏtulo del nuevo Flyer"
                           id="postTitle"
-                          required
                         />
                       </Col>
                       <Col className="col-12 p-0">
                         <Form.Control
+                          //required
                           type="text"
                           placeholder="Ingresa el texto del nuevo Flyer"
                           id="postText"
-                          required
                         />
                       </Col>
                       <Col className="p-0">

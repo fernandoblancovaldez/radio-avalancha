@@ -32,8 +32,12 @@ const Main = () => {
                     rounded
                   />
                   <Carousel.Caption className="p-0">
-                    <h3 className="fs-5 fw-semibold mb-1">{pst.title}</h3>
-                    <p className="fs-6 fw-light mb-1 lh-1">{pst.text}</p>
+                    {pst.title.length > 0 && (
+                      <h3 className="fs-5 fw-semibold mb-1">{pst.title}</h3>
+                    )}
+                    {pst.text.length > 0 && (
+                      <p className="fs-6 fw-light mb-1 lh-1">{pst.text}</p>
+                    )}
                     <Button
                       variant="outline-light"
                       className="btn-sm rounded-circle p-2"
