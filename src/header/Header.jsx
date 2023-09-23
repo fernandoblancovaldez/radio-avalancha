@@ -8,12 +8,12 @@ function Header() {
         <Image
           src={AvalanchaLogo}
           alt="Avalancha Logo"
-          className="avalancha-logo"
+          className="avalancha-logo h-50"
         />
         <Col className="justify-content-center col-12 text-center">
-          <h1 className="mb-0 text-light fs-1 h-50">
+          {/* <h1 className="mb-0 text-light fs-1 h-50">
             <b className="fw-semibold">escuchame entre el ruido</b>
-          </h1>
+          </h1> */}
           <h2 className="mb-0 text-light fs-6">
             <small className="lh-1 fw-light"> tu programa de rock </small>
           </h2>
