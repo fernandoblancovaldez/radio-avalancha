@@ -98,7 +98,7 @@ const Player = () => {
       <Col className="d-flex justify-content-start align-items-center flex-column col-auto">
         <audio
           ref={audioPlayer}
-          src /* ="http://giss.tv:8000/acbradio.mp3"  */="/api/"
+          src="https://buecrplb01.cienradios.com.ar/1406_Rock_Argentino_32000.aac" /* ="/api/" */
         ></audio>
         <Col className="d-flex align-items-center">
           <SkipBackwardFill
