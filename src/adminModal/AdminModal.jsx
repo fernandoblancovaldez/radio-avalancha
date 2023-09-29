@@ -18,12 +18,16 @@ import {
   Row,
   Container,
   Card,
+  Spinner,
 } from "react-bootstrap";
 import {
   BoxArrowRight,
   PlusCircleFill,
   DashLg,
   ArrowClockwise,
+  MicFill,
+  MicMuteFill,
+  Dot,
 } from "react-bootstrap-icons";
 import AvalanchaIcon from "../assets/icon-light.png";
 
@@ -31,9 +35,11 @@ const AdminModal = () => {
   const { currentUser, signInWithGoogle, logout } = UserAuth();
   const [show, setShow] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [radioData, setRadioData] = useState([]);
   const [visitorsIps, setVisitorsIps] = useState([]);
 
   const userEmail = currentUser ? currentUser.email : "usuario no loggeado";
+  const onAir = radioData ? radioData.onAir : false;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -98,6 +104,7 @@ const AdminModal = () => {
         id: +new Date(),
         title,
         text,
+        onAir,
       };
 
       const refDoc = doc(db, `app/content`);
@@ -108,6 +115,21 @@ const AdminModal = () => {
 
     e.target.radioDataTitle.value = "";
     e.target.radioDataText.value = "";
+  };
+
+  const handleSwitchOnAirStatus = async () => {
+    try {
+      const newData = {
+        id: radioData.id,
+        title: radioData.title,
+        text: radioData.text,
+        onAir: !onAir,
+      };
+      const refDoc = doc(db, `app/content`);
+      await updateDoc(refDoc, { radioData: [newData] });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleClearChat = async () => {
@@ -162,8 +184,10 @@ const AdminModal = () => {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, `app/content`), (querySnapshot) => {
-      const posts = querySnapshot.data().posts;
-      setPosts(posts);
+      const newPosts = querySnapshot.data().posts;
+      const newRadioData = querySnapshot.data().radioData[0];
+      setPosts(newPosts);
+      setRadioData(newRadioData);
     });
     return () => unsubscribe;
   }, []);
@@ -181,12 +205,12 @@ const AdminModal = () => {
 
       <Modal centered backdrop="static" show={show} onHide={handleClose}>
         <Modal.Header closeButton className="py-2 px-3">
-          <Modal.Title>Panel de Administrador</Modal.Title>
+          <Modal.Title>Panel de Administración</Modal.Title>
         </Modal.Header>
         {!currentUser ? (
           <Modal.Body className="d-flex align-items-center justify-content-center p-2">
             <Button className="btn-dark btn-sm" onClick={handleLogin}>
-              Ingresar como administrador
+              Inicia sesón para acceder
             </Button>
           </Modal.Body>
         ) : (
@@ -197,7 +221,7 @@ const AdminModal = () => {
               <>
                 <p className="d-block">
                   No tienes autorización para administrar éste sitio pero puedes
-                  participar del chat, bienvenido!
+                  participar del chat, bienvenid@!
                 </p>
                 <Button
                   variant="dark"
@@ -325,17 +349,43 @@ const AdminModal = () => {
                     </Row>
                   </Form>
                 </Container>
+                <Container className="d-flex col-auto">
+                  {onAir ? (
+                    <Button
+                      variant="danger"
+                      onClick={handleSwitchOnAirStatus}
+                      className="p-2 d-flex justify-content-center align-items-center mx-auto mb-2 position-relative rounded-circle"
+                    >
+                      <span className="d-flex justify-content-center align-items-center position-absolute top-0 start-100 translate-middle p-1 ">
+                        <Spinner animation="grow" size="sm" variant="success" />
+                      </span>
+                      <MicMuteFill />
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="success"
+                      onClick={handleSwitchOnAirStatus}
+                      className="p-2 d-flex justify-content-center align-items-center mx-auto mb-2 rounded-circle position-relative"
+                    >
+                      {/* <span className="d-flex justify-content-center align-items-center position-absolute top-0 start-100 translate-middle p-2 bg-secondary border border-light rounded-circle">
+                        <Dot size="sm" />
+                      </span> */}
+
+                      <MicFill />
+                    </Button>
+                  )}
+                  <Button
+                    variant="danger"
+                    onClick={handleClearChat}
+                    className="btn-sm d-flex justify-content-center align-items-center mx-auto mb-2"
+                  >
+                    Limpiar chat
+                  </Button>
+                </Container>
 
                 <Button
-                  variant="danger"
-                  onClick={handleClearChat}
-                  className="btn-sm d-flex justify-content-center align-items-center mx-auto mb-2"
-                >
-                  Limpiar chat
-                </Button>
-                <Button
                   variant="dark"
-                  className="btn-sm d-flex justify-content-center align-items-center  mx-auto p-2 rounded-circle "
+                  className="d-flex justify-content-center align-items-center  mx-auto p-2 rounded-circle "
                   onClick={handleLogout}
                 >
                   <BoxArrowRight />

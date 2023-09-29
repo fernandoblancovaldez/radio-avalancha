@@ -1,4 +1,4 @@
-import { Row, Col, Image, Spinner, Form } from "react-bootstrap";
+import { Row, Col, Image, Spinner } from "react-bootstrap";
 import EscuchameEntreElRuidoLogo from "../assets/escuchame-entre-el-ruido.png";
 import {
   PlayFill,
@@ -16,6 +16,9 @@ const Player = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   /* const [duration, setDuration] = useState(0);
   const [bufferDuration, setBufferDuration] = useState(0); */
+  const radioSrc = radioData.onAir
+    ? "http://giss.tv:8000/amparo.mp3"
+    : "https://buecrplb01.cienradios.com.ar/1406_Rock_Argentino_32000.aac";
 
   const audioPlayer = useRef();
 
@@ -61,6 +64,13 @@ const Player = () => {
     });
     return () => unsubscribe;
   }, []);
+
+  useEffect(() => {
+    audioPlayer.current.load();
+    const prevValue = isPlaying;
+    prevValue ? audioPlayer.current.play() : audioPlayer.current.pause();
+  }, [radioData]);
+
   return (
     <Col className="px-0 d-flex align-items-start">
       <Col className="d-flex">
@@ -96,10 +106,7 @@ const Player = () => {
         </Col>
       </Col>
       <Col className="d-flex justify-content-start align-items-center flex-column col-auto">
-        <audio
-          ref={audioPlayer}
-          src="https://buecrplb01.cienradios.com.ar/1406_Rock_Argentino_32000.aac" /* ="/api/" */
-        ></audio>
+        <audio ref={audioPlayer} src={radioSrc}></audio>
         <Col className="d-flex align-items-center">
           <SkipBackwardFill
             onClick={handleBackward}
