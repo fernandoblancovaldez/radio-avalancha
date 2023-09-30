@@ -210,7 +210,7 @@ const AdminModal = () => {
         {!currentUser ? (
           <Modal.Body className="d-flex align-items-center justify-content-center p-2">
             <Button className="btn-dark btn-sm" onClick={handleLogin}>
-              Inicia sesón para acceder
+              Inicia sesión para acceder
             </Button>
           </Modal.Body>
         ) : (
