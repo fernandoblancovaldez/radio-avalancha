@@ -215,7 +215,7 @@ const AdminModal = () => {
         ) : (
           <Modal.Body className="modal-dialog-scrollable py-2 px-3">
             {userEmail !== "ccastronuevo@gmail.com" &&
-            userEmail !== "avalanchaproduccionesok@gmail" &&
+            userEmail !== "avalanchaproduccionesok@gmail.com" &&
             userEmail !== "fernandoblancovaldez@gmail.com" ? (
               <>
                 <p className="d-block">
