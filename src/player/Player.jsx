@@ -17,7 +17,7 @@ const Player = () => {
   /* const [duration, setDuration] = useState(0);
   const [bufferDuration, setBufferDuration] = useState(0); */
   const radioSrc = radioData.onAir
-    ? "http://giss.tv:8000/amparo.mp3"
+    ? "http://giss.tv:8000/avalanchax.mp3"
     : "https://buecrplb01.cienradios.com.ar/1406_Rock_Argentino_32000.aac";
 
   const audioPlayer = useRef();

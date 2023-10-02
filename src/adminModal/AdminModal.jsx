@@ -27,7 +27,6 @@ import {
   ArrowClockwise,
   MicFill,
   MicMuteFill,
-  Dot,
 } from "react-bootstrap-icons";
 import AvalanchaIcon from "../assets/icon-light.png";
 
