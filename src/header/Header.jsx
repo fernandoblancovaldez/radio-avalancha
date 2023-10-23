@@ -4,7 +4,7 @@ import { Navbar, Image, Col } from "react-bootstrap";
 function Header() {
   return (
     <header>
-      <Navbar className="pt-4 d-flex align-items-center justify-content-center hdr-lgo-cont p-0 bg-blur shadow flex-column">
+      <Navbar className="pt-3 d-flex align-items-center justify-content-center hdr-lgo-cont p-0 bg-blur shadow flex-column">
         <Image
           src={AvalanchaLogo}
           alt="Avalancha Logo"
