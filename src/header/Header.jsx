@@ -15,7 +15,7 @@ function Header() {
             <b className="fw-semibold">escuchame entre el ruido</b>
           </h1> */}
           <h2 className="mb-0 text-light fs-6">
-            <small className="lh-1 fw-light"> tu programa de rock </small>
+            <small className="lh-1 fw-light"> radio online</small>
           </h2>
         </Col>
       </Navbar>

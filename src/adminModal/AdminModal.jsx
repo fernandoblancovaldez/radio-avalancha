@@ -167,7 +167,7 @@ const AdminModal = () => {
             if (
               userEmail === "ccastronuevo@gmail.com" ||
               userEmail === "fernandoblancovaldez@gmail.com" ||
-              userEmail === "avalanchaproduccionesok@gmail"
+              userEmail === "avalanchaproduccionesok@gmail.com"
             ) {
               updateDoc(refDoc, { admins: [currentIp] });
               setVisitorsIps(visitors);
